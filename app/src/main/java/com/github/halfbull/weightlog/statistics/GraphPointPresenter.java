@@ -56,7 +56,6 @@ class GraphPointPresenter {
     }
 
     private void setBoundaries() {
-
         int rangeSize = activity.getResources().getInteger(R.integer.graph_range_size);
         float rangeStart = getRangeStart(rangeSize);
         plot.setRangeBoundaries(rangeStart, rangeStart + rangeSize, BoundaryMode.FIXED);

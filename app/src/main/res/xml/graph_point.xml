@@ -3,4 +3,4 @@
     linePaint.color="#00000000"
     vertexPaint.color="@color/colorAccent"
     vertexPaint.strokeWidth="5dp"
-    fillPaint.color="#FAFAFA"/><!-- TODO : color background from resources! -->
+    fillPaint.color="#00000000"/>
