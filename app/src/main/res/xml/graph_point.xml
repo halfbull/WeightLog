@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config
+    linePaint.color="#00000000"
+    vertexPaint.color="@color/colorAccent"
+    vertexPaint.strokeWidth="5dp"
+    fillPaint.color="#FAFAFA"/><!-- TODO : color background from resources! -->

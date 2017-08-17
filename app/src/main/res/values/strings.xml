@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Weight Log</string>
+    <string name="open_nav_drawer">Open navigation drawer.</string>
+    <string name="close_nav_drawer">Close navigation drawer.</string>
+
+    <string name="nav_drawer_menu_log">Log</string>
+    <string name="nav_drawer_menu_import_export">Import / Export</string>
+    <string name="nav_drawer_menu_stats">Statistics</string>
+
+    <string name="graph_title">Weight Over Time</string>
+    <string name="graph_domain_title">date</string>
+    <string name="graph_range_title">kg</string>
+    <string name="graph_weight_series_title">weight</string>
+
+    <string name="import_export_location_label">Location</string>
+    <string name="import_export_import_button">Import</string>
+    <string name="import_export_export_button">Export</string>
+    <string name="import_export_file_not_found_exception">File not found!</string>
+    <string name="import_export_read_io_exception">Can\'t read file!</string>
+    <string name="import_export_write_io_exception">Can\'t write to file!</string>
+    <string name="import_export_external_storage_unmounted">External storage not available.</string>
+
+    <string name="add_weight_dialog_title">Current body weight</string>
+    <string name="add_weight_dialog_ok_button">@android:string/ok</string>
+    <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
+</resources>

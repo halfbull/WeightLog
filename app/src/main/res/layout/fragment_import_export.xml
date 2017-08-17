@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <EditText
+        android:id="@+id/location_et"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_tv"/>
+
+    <TextView
+        android:id="@+id/location_tv"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:text="@string/import_export_location_label"
+        android:labelFor="@id/location_et"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/importButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/import_export_import_button"
+        app:layout_constraintTop_toBottomOf="@+id/location_et"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <Button
+        android:id="@+id/exportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/import_export_export_button"
+        app:layout_constraintLeft_toRightOf="@+id/importButton"
+        app:layout_constraintTop_toBottomOf="@+id/location_et"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+</android.support.constraint.ConstraintLayout>

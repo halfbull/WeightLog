@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="graph_last_point_domain_position" type="integer" format="float">0.33</item>
+    <item name="graph_last_point_range_position" type="integer" format="float">0.5</item>
+</resources>

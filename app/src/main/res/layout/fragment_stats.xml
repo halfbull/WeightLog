@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.androidplot.xy.XYPlot
+        android:id="@+id/plot"
+        style="@style/APDefacto.Light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:title="@string/graph_title"
+        app:rangeTitle="@string/graph_range_title"
+        app:domainTitle="@string/graph_domain_title"
+        app:lineLabels="left|bottom"
+        app:lineLabelRotationBottom="-45"
+        app:gridBackgroundColor="?android:colorBackground"
+        app:graphBackgroundColor="?android:colorBackground"
+        app:backgroundColor="?android:colorBackground"
+        app:domainOriginLineColor="@color/ap_gray"
+        app:domainOriginLineThickness="1dp"
+        app:rangeOriginLineColor="@color/ap_gray"
+        app:rangeOriginLineThickness="1dp"
+        app:paddingTop="2dp"/>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weight Log</string>
+    <string name="open_nav_drawer">Открыть боковое меню.</string>
+    <string name="close_nav_drawer">Закрыть боковое меню.</string>
+
+    <string name="nav_drawer_menu_log">Лог</string>
+    <string name="nav_drawer_menu_import_export">Импорт / Экспорт</string>
+    <string name="nav_drawer_menu_stats">Статистика</string>
+
+    <string name="graph_title">Изменение Веса</string>
+    <string name="graph_domain_title">дата</string>
+    <string name="graph_range_title">кг</string>
+    <string name="graph_weight_series_title">вес</string>
+
+    <string name="import_export_location_label">Путь</string>
+    <string name="import_export_import_button">Импорт</string>
+    <string name="import_export_export_button">Экспорт</string>
+    <string name="import_export_file_not_found_exception">Файл не найден!</string>
+    <string name="import_export_read_io_exception">Ошибка чтения файла!</string>
+    <string name="import_export_write_io_exception">Ошибка записи файла!</string>
+    <string name="import_export_external_storage_unmounted">Внешний накопитель недоступен!</string>
+
+    <string name="add_weight_dialog_title">Текущий вес тела</string>
+    <string name="add_weight_dialog_ok_button">@android:string/ok</string>
+    <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
+</resources>
