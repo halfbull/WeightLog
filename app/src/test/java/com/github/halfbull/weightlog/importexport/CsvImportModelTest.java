@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -51,6 +52,9 @@ public class CsvImportModelTest {
 
     private CsvImportModel model;
 
+    @Captor
+    ArgumentCaptor<List<Weight>> weightListCaptor;
+
     @Before
     public void setUp() throws FileNotFoundException {
         model = new CsvImportModel(weightDao, streamFactory, csvConverterFactory);
@@ -78,10 +82,9 @@ public class CsvImportModelTest {
 
         int processedRecords = model.importLog(new File("dummy.csv"));
 
-        ArgumentCaptor<Weight> captor = ArgumentCaptor.forClass(Weight.class);
-        verify(weightDao, times(3)).insert(captor.capture());
+        verify(weightDao, times(1)).insertList(weightListCaptor.capture());
 
-        Assert.assertArrayEquals(csvList.toArray(), captor.getAllValues().toArray());
+        Assert.assertArrayEquals(csvList.toArray(), weightListCaptor.getValue().toArray());
 
         Assert.assertEquals(3, processedRecords);
     }
@@ -106,9 +109,8 @@ public class CsvImportModelTest {
 
         int processedRecords = model.importLog(new File("dummy.csv"));
 
-        ArgumentCaptor<Weight> captor = ArgumentCaptor.forClass(Weight.class);
-        verify(weightDao, times(1)).insert(captor.capture());
-        assertEquals(csvList.get(0), captor.getValue());
+        verify(weightDao, times(1)).insertList(weightListCaptor.capture());
+        assertEquals(csvList.get(0), weightListCaptor.getValue().get(0));
 
         Assert.assertEquals(1, processedRecords);
     }

@@ -20,6 +20,9 @@ public interface WeightDao {
     @Insert
     void insert(Weight weight);
 
+    @Insert
+    void insertList(List<Weight> weight);
+
     @Delete
     void delete(Weight weight);
 }

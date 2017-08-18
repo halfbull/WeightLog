@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -49,15 +50,20 @@ class CsvImportModel {
 
     private int addUniqueEntries(@NonNull Set<Long> databaseTimestamps, @NonNull List<Weight> importList) {
         int added = 0;
+
+        List<Weight> filteredList = new LinkedList<>();
         for (Weight w : importList) {
 
             Long roundTimestamp = getTimestampRoundedBySeconds(w.getDate());
             if (!databaseTimestamps.contains(roundTimestamp)) {
-                weightDao.insert(w);
+                filteredList.add(w);
                 added++;
                 databaseTimestamps.add(roundTimestamp);
             }
         }
+
+        weightDao.insertList(filteredList);
+
         return added;
     }
 
