@@ -9,13 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.github.halfbull.weightlog.ViewModelHost;
 import com.github.halfbull.weightlog.R;
 
@@ -70,12 +70,16 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
         FloatingActionButton fab = v.findViewById(R.id.add_fab);
         fab.setOnClickListener(this);
 
+        final ContentLoadingProgressBar progressBar = v.findViewById(R.id.weightLogProgressBar);
+
+        progressBar.show();
         model.getWeightDiffs().observe(this, new Observer<WeightDiffList>() {
             @Override
             public void onChanged(@Nullable WeightDiffList weightDiffs) {
                 WeightLogFragment.this.weightDiffs = weightDiffs;
                 if (weightDiffs != null) {
                     adapter.setModel(weightDiffs);
+                    progressBar.hide();
                 }
             }
         });

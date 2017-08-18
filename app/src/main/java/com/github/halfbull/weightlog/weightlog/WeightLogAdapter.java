@@ -66,10 +66,10 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
             value.setText(formatFloat(weightDiff.getValue()));
             date.setText(formatDate(weightDiff.getDate()));
 
-            if (weightDiff.getDiff() < 0) {
-                diff.setBackgroundResource(R.drawable.circle_shape_minus);
-            } else if (weightDiff.getDiff() > 0) {
+            if (weightDiff.getDiff() >= 0) {
                 diff.setBackgroundResource(R.drawable.circle_shape_plus);
+            } else {
+                diff.setBackgroundResource(R.drawable.circle_shape_minus);
             }
         }
 

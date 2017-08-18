@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/location_et"
-        android:layout_width="379dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/location_tv"
-        android:layout_width="379dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/import_export_location_label"
         android:labelFor="@id/location_et"

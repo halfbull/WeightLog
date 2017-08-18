@@ -11,8 +11,8 @@ import java.util.List;
 @Dao
 public interface WeightDao {
 
-    @Query("SELECT * FROM weight ORDER BY date DESC LIMIT :n")
-    LiveData<List<Weight>> getLastReversed(@SuppressWarnings("SameParameterValue") int n);
+    @Query("SELECT * FROM weight ORDER BY date DESC")
+    LiveData<List<Weight>> getLastReversed();
 
     @Query("SELECT * FROM weight ORDER BY date ASC")
     List<Weight> getAll();

@@ -22,7 +22,7 @@ public class WeightLogViewModel {
 
     @NonNull
     LiveData<WeightDiffList> getWeightDiffs() {
-        return Transformations.map(weightDao.getLastReversed(300), new Function<List<Weight>, WeightDiffList>() {
+        return Transformations.map(weightDao.getLastReversed(), new Function<List<Weight>, WeightDiffList>() {
             @NonNull
             @Override
             public WeightDiffList apply(List<Weight> weights) {
