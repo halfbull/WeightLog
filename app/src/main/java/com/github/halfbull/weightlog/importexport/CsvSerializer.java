@@ -22,6 +22,7 @@ class CsvSerializer extends CsvConverter {
         }
     }
 
+    @NonNull
     private String serialize(@NonNull Weight weight) {
         return DATE_FORMAT.format(weight.getDate()) + "\t" + weight.getValue() + "\r\n";
     }

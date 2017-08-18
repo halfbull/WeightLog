@@ -11,8 +11,11 @@ import com.github.halfbull.weightlog.weightlog.WeightLogViewModel;
 
 public class ViewModelHost extends AndroidViewModel {
 
+    @NonNull
     private final ImportExportViewModel importExportViewModel;
+    @NonNull
     private final GraphViewModel graphViewModel;
+    @NonNull
     private final WeightLogViewModel weightLogViewModel;
 
     public ViewModelHost(@NonNull Application application) {
@@ -24,14 +27,17 @@ public class ViewModelHost extends AndroidViewModel {
         weightLogViewModel = new WeightLogViewModel(database.weightDao());
     }
 
+    @NonNull
     public ImportExportViewModel getImportExportModel() {
         return importExportViewModel;
     }
 
+    @NonNull
     public GraphViewModel getGraphModel() {
         return graphViewModel;
     }
 
+    @NonNull
     public WeightLogViewModel getWeightLogModel() {
         return weightLogViewModel;
     }

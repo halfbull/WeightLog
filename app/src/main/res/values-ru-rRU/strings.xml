@@ -24,4 +24,7 @@
     <string name="add_weight_dialog_title">Текущий вес тела</string>
     <string name="add_weight_dialog_ok_button">@android:string/ok</string>
     <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
+
+    <string name="weight_log_remove_snack_message">Запись удалена</string>
+    <string name="weight_log_remove_snack_undo">ОТМЕНИТЬ</string>
 </resources>

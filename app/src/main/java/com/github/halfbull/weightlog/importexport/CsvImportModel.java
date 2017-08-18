@@ -61,7 +61,7 @@ class CsvImportModel {
         return added;
     }
 
-    private Long getTimestampRoundedBySeconds(Date date) {
+    private Long getTimestampRoundedBySeconds(@NonNull Date date) {
         return date.getTime() / 1000 * 1000;
     }
 }

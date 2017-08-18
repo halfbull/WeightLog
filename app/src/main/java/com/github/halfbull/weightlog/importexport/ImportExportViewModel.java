@@ -14,7 +14,9 @@ import java.io.IOException;
 
 public class ImportExportViewModel {
 
+    @NonNull
     private final CsvImportModel csvImportModel;
+    @NonNull
     private final CsvExportModel csvExportModel;
 
     public ImportExportViewModel(WeightDao weightDao) {

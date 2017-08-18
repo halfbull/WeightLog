@@ -36,6 +36,14 @@ class WeightDiffList {
         return weights.size();
     }
 
+    void remove(int position) {
+        weights.remove(position);
+    }
+
+    void insert(int position, Weight weight) {
+        weights.add(position, weight);
+    }
+
     private Weight getPrevious(int i) {
         if (i + 1 < weights.size())
             return weights.get(i + 1);

@@ -49,7 +49,7 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
     class WeightViewHolder extends RecyclerView.ViewHolder {
 
         @SuppressWarnings("SpellCheckingInspection")
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("EE, dd MMMM yyyy", Locale.getDefault());
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy, kk:mm", Locale.getDefault());
         private final TextView diff;
         private final TextView value;
         private final TextView date;

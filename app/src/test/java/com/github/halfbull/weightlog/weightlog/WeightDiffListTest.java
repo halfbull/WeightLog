@@ -1,5 +1,7 @@
 package com.github.halfbull.weightlog.weightlog;
 
+import android.support.annotation.NonNull;
+
 import com.github.halfbull.weightlog.database.Weight;
 
 import org.junit.Test;
@@ -71,6 +73,7 @@ public class WeightDiffListTest {
         assertEquals(3, model.size());
     }
 
+    @NonNull
     private Builder builder() {
         return new Builder();
     }
@@ -80,21 +83,25 @@ public class WeightDiffListTest {
         private float value;
         private float diff;
 
+        @NonNull
         Builder day(int day) {
             date = new GregorianCalendar(2017, 0, day).getTime();
             return this;
         }
 
+        @NonNull
         Builder value(float value) {
             this.value = value;
             return this;
         }
 
+        @NonNull
         Builder diff(float diff) {
             this.diff = diff;
             return this;
         }
 
+        @NonNull
         Weight weight() {
             Weight w = new Weight();
             w.setDate(date);
@@ -102,6 +109,7 @@ public class WeightDiffListTest {
             return w;
         }
 
+        @NonNull
         WeightDiff weightDiff() {
             return new WeightDiff(diff, value, date);
         }

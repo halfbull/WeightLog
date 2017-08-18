@@ -12,6 +12,7 @@ import java.util.List;
 
 public class GraphViewModel {
 
+    @NonNull
     private final GraphModel graphModel;
 
     public GraphViewModel(WeightDao weightDao) {

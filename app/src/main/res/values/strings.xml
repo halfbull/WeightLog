@@ -18,9 +18,12 @@
     <string name="import_export_file_not_found_exception">File not found!</string>
     <string name="import_export_read_io_exception">Can\'t read file!</string>
     <string name="import_export_write_io_exception">Can\'t write to file!</string>
-    <string name="import_export_external_storage_unmounted">External storage not available.</string>
+    <string name="import_export_external_storage_unmounted">External storage not available!</string>
 
     <string name="add_weight_dialog_title">Current body weight</string>
     <string name="add_weight_dialog_ok_button">@android:string/ok</string>
     <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
+
+    <string name="weight_log_remove_snack_message">Entry removed.</string>
+    <string name="weight_log_remove_snack_undo">UNDO</string>
 </resources>
