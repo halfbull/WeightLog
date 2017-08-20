@@ -15,9 +15,12 @@ import java.util.List;
 public class WeightLogViewModel {
 
     private final WeightDao weightDao;
+    @NonNull
+    private final WeightsRecycleBinViewModel recycle;
 
     public WeightLogViewModel(WeightDao weightDao) {
         this.weightDao = weightDao;
+        this.recycle = new WeightsRecycleBinViewModel(weightDao);
     }
 
     @NonNull
@@ -51,5 +54,12 @@ public class WeightLogViewModel {
                 return null;
             }
         }.execute();
+
+        recycle.add(weight);
+    }
+
+    @NonNull
+    WeightsRecycleBinViewModel getRecycle() {
+        return recycle;
     }
 }

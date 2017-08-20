@@ -16,8 +16,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.github.halfbull.weightlog.ViewModelHost;
 import com.github.halfbull.weightlog.R;
+import com.github.halfbull.weightlog.database.Weight;
+
+import java.util.List;
 
 public class WeightLogFragment extends LifecycleFragment implements View.OnClickListener {
 
@@ -53,7 +57,10 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
                     @Nullable
                     @Override
                     protected Void doInBackground(Void... voids) {
-                        deleteOrCancel(position);
+                        if (weightDiffs != null) {
+                            Weight weight = weightDiffs.getWeight(position);
+                            model.delWeight(weight);
+                        }
                         return null;
                     }
                 }.execute();
@@ -71,7 +78,6 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
         fab.setOnClickListener(this);
 
         final ContentLoadingProgressBar progressBar = v.findViewById(R.id.weightLogProgressBar);
-
         progressBar.show();
         model.getWeightDiffs().observe(this, new Observer<WeightDiffList>() {
             @Override
@@ -84,34 +90,35 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
             }
         });
 
+        model.getRecycle().getDeletedWeights().observe(this, new Observer<List<Weight>>() {
+            @Override
+            public void onChanged(@Nullable List<Weight> weights) {
+                if (weights != null && weights.size() > 0) {
+                    showItemsDeletedSnackBar();
+                }
+            }
+        });
+
         return v;
     }
 
-    private void deleteOrCancel(final int position) {
-        if (weightDiffs == null)
-            return;
-
-        final DeleteWeightCommand command = new DeleteWeightCommand(weightDiffs, adapter, model, position);
-
-        Snackbar.make(weightLog, R.string.weight_log_remove_snack_message, Snackbar.LENGTH_LONG)
+    private void showItemsDeletedSnackBar() {
+        int deletedItems = model.getRecycle().size();
+        String message = getResources().getQuantityString(R.plurals.weight_log_remove_snack_message, deletedItems, deletedItems);
+        Snackbar.make(weightLog, message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.weight_log_remove_snack_undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        command.cancel();
+                        model.getRecycle().restore();
                     }
                 })
                 .addCallback(new Snackbar.Callback() {
                     @Override
-                    public void onShown(Snackbar sb) {
-                        super.onShown(sb);
-                        command.execute();
-                    }
-
-                    @Override
                     public void onDismissed(Snackbar transientBottomBar, int event) {
                         super.onDismissed(transientBottomBar, event);
-                        if (command.isNotCancelled()) {
-                            command.commit();
+
+                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                            model.getRecycle().clear();
                         }
                     }
                 }).show();

@@ -12,4 +12,10 @@
         <item quantity="many">Экспортировано %d записей.</item>
         <item quantity="other">Экспортировано %d записей.</item>
     </plurals>
+    <plurals name="weight_log_remove_snack_message">
+        <item quantity="one">Удалена %d запись.</item>
+        <item quantity="few">Удалено %d записи.</item>
+        <item quantity="many">Удалено %d записей.</item>
+        <item quantity="other">Удалено %d записей.</item>
+    </plurals>
 </resources>

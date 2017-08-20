@@ -8,4 +8,8 @@
         <item quantity="one">Exported %d record.</item>
         <item quantity="other">Exported %d records.</item>
     </plurals>
+    <plurals name="weight_log_remove_snack_message">
+        <item quantity="one">Removed %d record.</item>
+        <item quantity="other">Removed %d records.</item>
+    </plurals>
 </resources>

@@ -24,6 +24,5 @@
     <string name="add_weight_dialog_ok_button">@android:string/ok</string>
     <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
 
-    <string name="weight_log_remove_snack_message">Entry removed.</string>
     <string name="weight_log_remove_snack_undo">UNDO</string>
 </resources>
