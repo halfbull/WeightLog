@@ -1,7 +1,9 @@
 package com.github.halfbull.weightlog.weightlog;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,15 +20,20 @@ class WeightsRecycleBinViewModel {
     private final WeightDao weightDao;
 
     private final List<Weight> weights = new LinkedList<>();
-    private final MutableLiveData<List<Weight>> weightsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> weightsChanged = new MutableLiveData<>();
 
     WeightsRecycleBinViewModel(WeightDao weightDao) {
         this.weightDao = weightDao;
     }
 
     @NonNull
-    LiveData<List<Weight>> getDeletedWeights() {
-        return this.weightsLiveData;
+    LiveData<Boolean> hasRecycledItems() {
+        return Transformations.map(weightsChanged, new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean input) {
+                return weights.size() > 0;
+            }
+        });
     }
 
     void clear() {
@@ -35,7 +42,7 @@ class WeightsRecycleBinViewModel {
 
     void add(Weight weight) {
         weights.add(weight);
-        weightsLiveData.postValue(weights);
+        weightsChanged.postValue(null);
     }
 
     int size() {

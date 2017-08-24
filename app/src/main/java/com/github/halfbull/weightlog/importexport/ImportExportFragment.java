@@ -1,14 +1,23 @@
 package com.github.halfbull.weightlog.importexport;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+//import android.app.NotificationManager;
+import android.app.NotificationManager;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+//import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+//import android.support.v7.app.NotificationCompat;
+import android.support.v7.app.NotificationCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +88,7 @@ public class ImportExportFragment extends LifecycleFragment implements View.OnCl
         switch (view.getId()) {
             case R.id.importButton:
                 if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                    //showNotification();
                     importLog();
                 else
                     requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_IMPORT_TASK);
@@ -91,6 +101,41 @@ public class ImportExportFragment extends LifecycleFragment implements View.OnCl
                     requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_EXPORT_TASK);
                 break;
         }
+    }
+
+    //private final String CHANNEL_01 ="channel_02";
+    private void showNotification() {
+        final NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
+        builder.setContentTitle("Long running task.")
+                .setContentText("Importing")
+                .setSmallIcon(android.R.drawable.stat_sys_upload)
+                .setProgress(0,0,true);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i =0; i<10;i++) {
+
+                    builder.setProgress(100, i, false);
+                    notificationManager.notify(101, builder.build());
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                builder.setContentText("Completed");
+                builder.setProgress(0,0,false);
+                builder.setSmallIcon(android.R.drawable.stat_sys_upload_done);
+                notificationManager.notify(101, builder.build());
+            }
+        }).start();
+
+
     }
 
     private void importLog() {

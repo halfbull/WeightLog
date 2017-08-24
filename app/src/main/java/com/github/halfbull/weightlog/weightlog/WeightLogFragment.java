@@ -21,8 +21,6 @@ import com.github.halfbull.weightlog.ViewModelHost;
 import com.github.halfbull.weightlog.R;
 import com.github.halfbull.weightlog.database.Weight;
 
-import java.util.List;
-
 public class WeightLogFragment extends LifecycleFragment implements View.OnClickListener {
 
     private WeightLogViewModel model;
@@ -90,10 +88,10 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
             }
         });
 
-        model.getRecycle().getDeletedWeights().observe(this, new Observer<List<Weight>>() {
+        model.getRecycle().hasRecycledItems().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable List<Weight> weights) {
-                if (weights != null && weights.size() > 0) {
+            public void onChanged(@Nullable Boolean hasRecycledItems) {
+                if (hasRecycledItems != null && hasRecycledItems) {
                     showItemsDeletedSnackBar();
                 }
             }

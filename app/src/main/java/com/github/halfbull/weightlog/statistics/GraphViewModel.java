@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.github.halfbull.weightlog.database.WeightDao;
+import com.github.mikephil.charting.data.Entry;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class GraphViewModel {
     }
 
     @NonNull
-    LiveData<List<GraphPoint>> getGraph() {
-        final MutableLiveData<List<GraphPoint>> liveData = new MutableLiveData<>();
+    LiveData<List<Entry>> getGraph() {
+        final MutableLiveData<List<Entry>> liveData = new MutableLiveData<>();
 
         new AsyncTask<Void, Void, Void>() {
             @Nullable

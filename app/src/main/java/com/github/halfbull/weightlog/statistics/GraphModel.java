@@ -1,10 +1,15 @@
 package com.github.halfbull.weightlog.statistics;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.util.TimingLogger;
 
 import com.github.halfbull.weightlog.database.Weight;
 import com.github.halfbull.weightlog.database.WeightDao;
+import com.github.mikephil.charting.data.Entry;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,13 +24,13 @@ class GraphModel {
     }
 
     @NonNull
-    List<GraphPoint> getGraph() {
+    List<Entry> getGraph() {
         List<Weight> weights = weightDao.getAll();
 
-        List<GraphPoint> graphPoints = new LinkedList<>();
+        List<Entry> graphPoints = new ArrayList<>(weights.size());
         for (Weight w : weights) {
             float floatMonth = floatDateConverter.dateToFloatMonth(w.getDate());
-            graphPoints.add(new GraphPoint(floatMonth, w.getValue()));
+            graphPoints.add(new Entry(floatMonth, w.getValue()));
         }
 
         return graphPoints;

@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.halfbull.weightlog.importexport.ImportExportFragment;
-import com.github.halfbull.weightlog.statistics.StatsFragment;
+import com.github.halfbull.weightlog.statistics.StatisticsFragment;
 import com.github.halfbull.weightlog.weightlog.WeightLogFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.stats_menu_item:
-                if (!(fragment instanceof StatsFragment))
-                    setFragment(item, new StatsFragment());
+                if (!(fragment instanceof StatisticsFragment))
+                    setFragment(item, new StatisticsFragment());
                 break;
         }
 

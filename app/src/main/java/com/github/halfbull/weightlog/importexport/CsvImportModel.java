@@ -53,7 +53,6 @@ class CsvImportModel {
 
         List<Weight> filteredList = new LinkedList<>();
         for (Weight w : importList) {
-
             Long roundTimestamp = getTimestampRoundedBySeconds(w.getDate());
             if (!databaseTimestamps.contains(roundTimestamp)) {
                 filteredList.add(w);

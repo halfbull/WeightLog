@@ -6,20 +6,23 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.androidplot.xy.XYPlot;
-import com.github.halfbull.weightlog.ViewModelHost;
 import com.github.halfbull.weightlog.R;
+import com.github.halfbull.weightlog.ViewModelHost;
+import com.github.halfbull.weightlog.database.Weight;
+import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.data.Entry;
 
 import java.util.List;
 
-public class StatsFragment extends LifecycleFragment {
+public class StatisticsFragment  extends LifecycleFragment {
 
     private ViewModelHost model;
-    private GraphPointPresenter graphPointPresenter;
+    private ChartPresenter chartPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,15 +34,16 @@ public class StatsFragment extends LifecycleFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_stats, container, false);
+        View v = inflater.inflate(R.layout.fragment_statistics, container, false);
 
-        graphPointPresenter = new GraphPointPresenter(getActivity(), (XYPlot) v.findViewById(R.id.plot));
+        chartPresenter = new ChartPresenter(getActivity(), (ScatterChart) v.findViewById(R.id.chart));
 
-        model.getGraphModel().getGraph().observe(this, new Observer<List<GraphPoint>>() {
+        model.getGraphModel().getGraph().observe(this, new Observer<List<Entry>>() {
             @Override
-            public void onChanged(@Nullable List<GraphPoint> graph) {
-                if (graph != null) {
-                    graphPointPresenter.Set(graph);
+            public void onChanged(@Nullable List<Entry> graph) {
+                if (graph != null && graph.size() > 0) {
+                    chartPresenter.initialize(graph);
+                    chartPresenter.drawLastSegment();
                 }
             }
         });
