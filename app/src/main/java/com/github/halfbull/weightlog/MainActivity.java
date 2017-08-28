@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.github.halfbull.weightlog.importexport.ImportExportFragment;
+import com.github.halfbull.weightlog.settings.SettingsFragment;
 import com.github.halfbull.weightlog.statistics.StatisticsFragment;
 import com.github.halfbull.weightlog.weightlog.WeightLogFragment;
 
@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity
                     setFragment(item, new WeightLogFragment());
                 break;
 
-            case R.id.import_export_menu_item:
-                if (!(fragment instanceof ImportExportFragment))
-                    setFragment(item, new ImportExportFragment());
-                break;
-
             case R.id.stats_menu_item:
                 if (!(fragment instanceof StatisticsFragment))
                     setFragment(item, new StatisticsFragment());
+                break;
+
+            case R.id.settings_menu_item:
+                if (!(fragment instanceof SettingsFragment))
+                    setFragment(item, new SettingsFragment());
                 break;
         }
 

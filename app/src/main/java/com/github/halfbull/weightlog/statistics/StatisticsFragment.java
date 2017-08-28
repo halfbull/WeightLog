@@ -11,10 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.github.halfbull.weightlog.R;
-import com.github.halfbull.weightlog.ViewModelHost;
+import com.github.halfbull.weightlog.AppViewModel;
 import com.github.halfbull.weightlog.database.Weight;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.data.Entry;
@@ -23,14 +22,14 @@ import java.util.List;
 
 public class StatisticsFragment  extends LifecycleFragment {
 
-    private ViewModelHost model;
+    private AppViewModel model;
     private ChartPresenter chartPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(ViewModelHost.class);
+        model = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
     }
 
     @Nullable

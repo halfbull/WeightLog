@@ -16,7 +16,7 @@ class WeightDiffList {
 
     @NonNull
     WeightDiff getDiff(int i) {
-        Weight current = weights.get(i);
+        Weight current = getWeight(i);
         Weight previous = getPrevious(i);
 
         float diff;
@@ -29,7 +29,7 @@ class WeightDiffList {
     }
 
     Weight getWeight(int i) {
-        return weights.get(i);
+        return weights.get(weights.size() - 1 - i);
     }
 
     int size() {
@@ -37,9 +37,9 @@ class WeightDiffList {
     }
 
     private Weight getPrevious(int i) {
-        if (i + 1 < weights.size())
-            return weights.get(i + 1);
+        if (i == (weights.size()-1))
+            return null;
 
-        return null;
+        return weights.get(weights.size() - 1 - (i+1));
     }
 }

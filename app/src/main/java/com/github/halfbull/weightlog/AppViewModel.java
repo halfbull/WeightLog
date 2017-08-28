@@ -4,7 +4,9 @@ import android.app.Application;
 import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.animation.Transformation;
@@ -12,37 +14,39 @@ import android.view.animation.Transformation;
 import com.github.halfbull.weightlog.database.AppDatabase;
 import com.github.halfbull.weightlog.database.Weight;
 import com.github.halfbull.weightlog.database.WeightDao;
-import com.github.halfbull.weightlog.importexport.ImportExportViewModel;
 import com.github.halfbull.weightlog.statistics.GraphViewModel;
 import com.github.halfbull.weightlog.weightlog.WeightLogViewModel;
 
 import java.util.List;
 
-public class ViewModelHost extends AndroidViewModel {
+public class AppViewModel extends AndroidViewModel {
 
-    @NonNull
-    private final ImportExportViewModel importExportViewModel;
     @NonNull
     private final GraphViewModel graphViewModel;
     @NonNull
     private final WeightLogViewModel weightLogViewModel;
 
-    private final WeightDao weightDao;
+    private WeightDao weightDao;
 
-    public ViewModelHost(@NonNull Application application) {
+    private LiveData<List<Weight>> weights;
+
+    public AppViewModel(@NonNull Application application) {
         super(application);
 
         AppDatabase database = AppDatabase.build(application.getApplicationContext());
-        importExportViewModel = new ImportExportViewModel(database.weightDao());
         graphViewModel = new GraphViewModel(database.weightDao());
         weightLogViewModel = new WeightLogViewModel(database.weightDao());
 
         weightDao = database.weightDao();
+        weights = database.weightDao().getAll2();
     }
 
-    @NonNull
-    public ImportExportViewModel getImportExportModel() {
-        return importExportViewModel;
+    public LiveData<List<Weight>> getWeights() {
+        return weights;
+    }
+
+    public WeightDao getWeightDao(){
+        return weightDao;
     }
 
     @NonNull

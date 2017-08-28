@@ -23,17 +23,6 @@ public class WeightLogViewModel {
         this.recycle = new WeightsRecycleBinViewModel(weightDao);
     }
 
-    @NonNull
-    LiveData<WeightDiffList> getWeightDiffs() {
-        return Transformations.map(weightDao.getLastReversed(), new Function<List<Weight>, WeightDiffList>() {
-            @NonNull
-            @Override
-            public WeightDiffList apply(List<Weight> weights) {
-                return new WeightDiffList(weights);
-            }
-        });
-    }
-
     void addWeight(final Weight weight) {
         new AsyncTask<Void, Void, Void>() {
             @Nullable

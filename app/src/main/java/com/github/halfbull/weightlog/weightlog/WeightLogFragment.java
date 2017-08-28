@@ -17,13 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.halfbull.weightlog.ViewModelHost;
+import com.github.halfbull.weightlog.AppViewModel;
 import com.github.halfbull.weightlog.R;
 import com.github.halfbull.weightlog.database.Weight;
 
+import java.util.List;
+
 public class WeightLogFragment extends LifecycleFragment implements View.OnClickListener {
 
-    private WeightLogViewModel model;
+    private AppViewModel model;
     private WeightLogAdapter adapter;
     @Nullable
     private WeightDiffList weightDiffs;
@@ -33,7 +35,7 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(ViewModelHost.class).getWeightLogModel();
+        model = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
         adapter = new WeightLogAdapter();
     }
 
@@ -57,7 +59,7 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
                     protected Void doInBackground(Void... voids) {
                         if (weightDiffs != null) {
                             Weight weight = weightDiffs.getWeight(position);
-                            model.delWeight(weight);
+                            model.getWeightLogModel().delWeight(weight);
                         }
                         return null;
                     }
@@ -77,18 +79,16 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
 
         final ContentLoadingProgressBar progressBar = v.findViewById(R.id.weightLogProgressBar);
         progressBar.show();
-        model.getWeightDiffs().observe(this, new Observer<WeightDiffList>() {
+        model.getWeightDao().getTail().observe(this, new Observer<List<Weight>>() {
             @Override
-            public void onChanged(@Nullable WeightDiffList weightDiffs) {
-                WeightLogFragment.this.weightDiffs = weightDiffs;
-                if (weightDiffs != null) {
-                    adapter.setModel(weightDiffs);
-                    progressBar.hide();
-                }
+            public void onChanged(@Nullable List<Weight> weights) {
+                weightDiffs =new WeightDiffList(weights);
+                adapter.setModel(weightDiffs);
+                progressBar.hide();
             }
         });
 
-        model.getRecycle().hasRecycledItems().observe(this, new Observer<Boolean>() {
+        model.getWeightLogModel().getRecycle().hasRecycledItems().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean hasRecycledItems) {
                 if (hasRecycledItems != null && hasRecycledItems) {
@@ -101,13 +101,13 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
     }
 
     private void showItemsDeletedSnackBar() {
-        int deletedItems = model.getRecycle().size();
+        int deletedItems = model.getWeightLogModel().getRecycle().size();
         String message = getResources().getQuantityString(R.plurals.weight_log_remove_snack_message, deletedItems, deletedItems);
         Snackbar.make(weightLog, message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.weight_log_remove_snack_undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        model.getRecycle().restore();
+                        model.getWeightLogModel().getRecycle().restore();
                     }
                 })
                 .addCallback(new Snackbar.Callback() {
@@ -116,7 +116,7 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
                         super.onDismissed(transientBottomBar, event);
 
                         if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                            model.getRecycle().clear();
+                            model.getWeightLogModel().getRecycle().clear();
                         }
                     }
                 }).show();

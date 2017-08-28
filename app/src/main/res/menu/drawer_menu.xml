@@ -8,7 +8,7 @@
             android:id="@+id/stats_menu_item"
             android:title="@string/nav_drawer_menu_stats" />
         <item
-            android:id="@+id/import_export_menu_item"
-            android:title="@string/nav_drawer_menu_import_export" />
+            android:id="@+id/settings_menu_item"
+            android:title="@string/nav_drawer_menu_settings" />
     </group>
 </menu>

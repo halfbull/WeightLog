@@ -4,7 +4,15 @@
         <item quantity="one">Imported %d record.</item>
         <item quantity="other">Imported %d records.</item>
     </plurals>
+    <plurals name="import_notification_imported">
+        <item quantity="one">Imported %d record.</item>
+        <item quantity="other">Imported %d records.</item>
+    </plurals>
     <plurals name="import_export_exported">
+        <item quantity="one">Exported %d record.</item>
+        <item quantity="other">Exported %d records.</item>
+    </plurals>
+    <plurals name="export_notification_exported">
         <item quantity="one">Exported %d record.</item>
         <item quantity="other">Exported %d records.</item>
     </plurals>

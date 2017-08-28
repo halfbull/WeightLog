@@ -7,6 +7,7 @@
     <string name="nav_drawer_menu_log">Лог</string>
     <string name="nav_drawer_menu_import_export">Импорт / Экспорт</string>
     <string name="nav_drawer_menu_stats">Статистика</string>
+    <string name="nav_drawer_menu_settings">Настройки</string>
 
     <string name="graph_title">Изменение Веса</string>
     <string name="graph_domain_title">дата</string>
@@ -25,5 +26,24 @@
     <string name="add_weight_dialog_ok_button">@android:string/ok</string>
     <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
 
+    <string name="import_dialog_title">Импорт данных</string>
+    <string name="import_dialog_ok_button">@android:string/ok</string>
+    <string name="import_dialog_cancel_button">@android:string/cancel</string>
+
+    <string name="export_dialog_title">Экспорт данных</string>
+    <string name="export_dialog_ok_button">@android:string/ok</string>
+    <string name="export_dialog_cancel_button">@android:string/cancel</string>
+
+    <string name="import_notification_title">Импорт</string>
+    <string name="import_notification_file_not_found_exception">Файл не найден!</string>
+    <string name="import_notification_io_exception">Ошибка чтения файла!</string>
+
+    <string name="export_notification_title">Экспорт</string>
+    <string name="export_notification_io_exception">Ошибка записи файла!</string>
+
     <string name="weight_log_remove_snack_undo">ОТМЕНИТЬ</string>
+
+    <string name="preference_category_data">Данные</string>
+    <string name="preference_import">Импорт</string>
+    <string name="preference_export">Экспорт</string>
 </resources>

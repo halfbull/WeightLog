@@ -9,20 +9,17 @@ import java.util.Date;
 @Entity
 public class Weight {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    private long id;
 
     @ColumnInfo
     private float value;
 
-    @ColumnInfo()
-    private Date date;
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -35,10 +32,10 @@ public class Weight {
     }
 
     public Date getDate() {
-        return date;
+        return new Date(id);
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.id = date.getTime();
     }
 }

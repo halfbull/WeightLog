@@ -6,7 +6,19 @@
         <item quantity="many">Импортировано %d записей.</item>
         <item quantity="other">Импортировано %d записей.</item>
     </plurals>
+    <plurals name="import_notification_imported">
+        <item quantity="one">Импортирована %d запись.</item>
+        <item quantity="few">Импортировано %d записи.</item>
+        <item quantity="many">Импортировано %d записей.</item>
+        <item quantity="other">Импортировано %d записей.</item>
+    </plurals>
     <plurals name="import_export_exported">
+        <item quantity="one">Экспортирована %d запись.</item>
+        <item quantity="few">Экспортировано %d записи.</item>
+        <item quantity="many">Экспортировано %d записей.</item>
+        <item quantity="other">Экспортировано %d записей.</item>
+    </plurals>
+    <plurals name="export_notification_exported">
         <item quantity="one">Экспортирована %d запись.</item>
         <item quantity="few">Экспортировано %d записи.</item>
         <item quantity="many">Экспортировано %d записей.</item>

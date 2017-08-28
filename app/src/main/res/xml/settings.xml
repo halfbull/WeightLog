@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/preference_category_data">
+        <Preference
+            android:key="preference_key_import"
+            android:title="@string/preference_import" />
+        <Preference
+            android:key="preference_key_export"
+            android:title="@string/preference_export" />
+    </PreferenceCategory>
+</PreferenceScreen>

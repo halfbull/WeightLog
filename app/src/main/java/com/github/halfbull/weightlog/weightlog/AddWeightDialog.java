@@ -14,16 +14,18 @@ import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 
-import com.github.halfbull.weightlog.ViewModelHost;
+import com.github.halfbull.weightlog.AppViewModel;
 import com.github.halfbull.weightlog.R;
 import com.github.halfbull.weightlog.database.Weight;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 public class AddWeightDialog extends DialogFragment {
 
-    private WeightLogViewModel model;
+    private AppViewModel model;
     private EditText valueEditText;
 
     @NonNull
@@ -33,7 +35,7 @@ public class AddWeightDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        model = ViewModelProviders.of(getActivity()).get(ViewModelHost.class).getWeightLogModel();
+        model = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
     }
 
     @NonNull
@@ -41,7 +43,6 @@ public class AddWeightDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_weight, null);
         valueEditText = v.findViewById(R.id.value_edit_text);
-
         valueEditText.setFilters(inputFilters);
 
         return new AlertDialog.Builder(getActivity())
@@ -60,10 +61,15 @@ public class AddWeightDialog extends DialogFragment {
                             @Nullable
                             @Override
                             protected Void doInBackground(Void... voids) {
+
+                                GregorianCalendar calendar = new GregorianCalendar();
+                                calendar.setTime(new Date());
+                                calendar.set(Calendar.MILLISECOND, 0);
+
                                 Weight w = new Weight();
-                                w.setDate(new Date());
+                                w.setDate(calendar.getTime());
                                 w.setValue(value);
-                                model.addWeight(w);
+                                model.getWeightLogModel().addWeight(w);
                                 return null;
                             }
                         }.execute();
