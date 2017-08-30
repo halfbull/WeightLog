@@ -1,5 +1,8 @@
 package com.github.halfbull.weightlog.weightlog;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,10 +20,13 @@ import java.util.Locale;
 
 class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewHolder> {
 
+    private Context context;
+
     private WeightDiffList weightDiffs;
 
-    WeightLogAdapter() {
+    WeightLogAdapter(Context context) {
         weightDiffs = new WeightDiffList(new LinkedList<Weight>());
+        this.context = context;
     }
 
     @NonNull
@@ -67,9 +73,9 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
             date.setText(formatDate(weightDiff.getDate()));
 
             if (weightDiff.getDiff() >= 0) {
-                diff.setBackgroundResource(R.drawable.circle_shape_plus);
+                diff.setTextColor(context.getResources().getColor(R.color.positive_weight_diff, context.getTheme()));
             } else {
-                diff.setBackgroundResource(R.drawable.circle_shape_minus);
+                diff.setTextColor(context.getResources().getColor(R.color.negative_weight_diff, context.getTheme()));
             }
         }
 
@@ -78,11 +84,14 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
         }
 
         private String formatDiff(float v) {
+            //return formatFloat(Math.abs(v));
             String str = formatFloat(v);
             if (v == 0)
                 return "";
             if (v > 0)
                 return "+" + str;
+
+            //return formatFloat(Math.abs(v));
             return str;
         }
 

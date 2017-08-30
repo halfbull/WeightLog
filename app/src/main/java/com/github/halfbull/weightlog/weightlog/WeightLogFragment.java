@@ -3,6 +3,7 @@ package com.github.halfbull.weightlog.weightlog;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,7 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
         super.onCreate(savedInstanceState);
 
         model = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
-        adapter = new WeightLogAdapter();
+        adapter = new WeightLogAdapter(getActivity());
     }
 
     @Nullable

@@ -34,7 +34,7 @@ public class ImportDialog extends DialogFragment {
     private final CsvConverter csvConverter = new CsvConverter();
     private AppViewModel model;
     private EditText locationEditText;
-    Activity activity;
+    Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class ImportDialog extends DialogFragment {
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_location, null);
         locationEditText = v.findViewById(R.id.location_edit_text);
 
-        activity = getActivity();
+        context = getActivity();
 
         setFileLocation();
 
@@ -81,10 +81,10 @@ public class ImportDialog extends DialogFragment {
     }
 
     private void importLog() {
-        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(activity);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
         notificationBuilder
-                .setContentTitle(getActivity().getResources().getString(R.string.import_notification_title))
+                .setContentTitle(context.getResources().getString(R.string.import_notification_title))
                 .setSmallIcon(R.drawable.ic_csv)
                 .setProgress(0, 0, true);
         notificationManager.notify(0, notificationBuilder.build());
@@ -105,11 +105,11 @@ public class ImportDialog extends DialogFragment {
             model.getWeightDao().insertList(weights);
 
             int importedRecords = model.getWeightDao().size() - beforeCount;
-            notificationText = activity.getResources().getQuantityString(R.plurals.import_notification_imported, importedRecords, importedRecords);
+            notificationText = context.getResources().getQuantityString(R.plurals.import_notification_imported, importedRecords, importedRecords);
         } catch (FileNotFoundException ex) {
-            notificationText = activity.getResources().getString(R.string.import_notification_file_not_found_exception);
+            notificationText = context.getResources().getString(R.string.import_notification_file_not_found_exception);
         } catch (IOException ex) {
-            notificationText = activity.getResources().getString(R.string.import_notification_io_exception);
+            notificationText = context.getResources().getString(R.string.import_notification_io_exception);
         }
 
         notificationBuilder.setContentText(notificationText);
