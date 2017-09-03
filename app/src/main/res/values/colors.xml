@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#43A047</color>
-    <color name="colorPrimaryDark">#4CAF50</color>
+    <color name="colorPrimaryDark">#387F3A</color>
     <color name="colorAccent">#00C853</color>
     <color name="positive_weight_diff">#F39C12</color>
     <color name="negative_weight_diff">#3498DB</color>

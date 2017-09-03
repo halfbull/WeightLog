@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.github.halfbull.weightlog.AppViewModel;
 import com.github.halfbull.weightlog.R;
 import com.github.halfbull.weightlog.database.Weight;
+import com.github.pierry.simpletoast.SimpleToast;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -12,6 +12,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 
 import com.github.halfbull.weightlog.R;
+import com.github.pierry.simpletoast.SimpleToast;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -59,6 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private void importLog() {
         ImportDialog dialog = new ImportDialog();
         dialog.show(getFragmentManager(), "IMPORT_DIALOG");
+        //SimpleToast.ok(getActivity(), "YEAH!");
     }
 
     private void onExportLogSelected() {
