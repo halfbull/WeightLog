@@ -44,5 +44,9 @@
 
     <string name="preference_category_data">Data</string>
     <string name="preference_import">Import</string>
+    <string name="preference_import_progress">Importing…</string>
+    <string name="preference_import_summary">Import from file \"weight_log.csv\"</string>
     <string name="preference_export">Export</string>
+    <string name="preference_export_progress">Exporting…</string>
+    <string name="preference_export_summary">Export to file \"weight_log.csv\"</string>
 </resources>

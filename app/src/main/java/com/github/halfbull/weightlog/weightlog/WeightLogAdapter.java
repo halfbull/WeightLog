@@ -55,21 +55,28 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
     class WeightViewHolder extends RecyclerView.ViewHolder {
 
         @SuppressWarnings("SpellCheckingInspection")
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy, kk:mm", Locale.getDefault());
+        final SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE, kk:mm", Locale.getDefault());
+
+        @SuppressWarnings("SpellCheckingInspection")
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+
         private final TextView diff;
         private final TextView value;
+        private final TextView dayOfWeek;
         private final TextView date;
 
         WeightViewHolder(@NonNull View itemView) {
             super(itemView);
             diff = itemView.findViewById(R.id.diff_tv);
             value = itemView.findViewById(R.id.value_tv);
+            dayOfWeek = itemView.findViewById(R.id.day_of_week);
             date = itemView.findViewById(R.id.date_tv);
         }
 
         void bind(@NonNull WeightDiff weightDiff) {
             diff.setText(formatDiff(weightDiff.getDiff()));
             value.setText(formatFloat(weightDiff.getValue()));
+            dayOfWeek.setText(dayOfWeekFormat.format(weightDiff.getDate()));
             date.setText(formatDate(weightDiff.getDate()));
 
             if (weightDiff.getDiff() >= 0) {

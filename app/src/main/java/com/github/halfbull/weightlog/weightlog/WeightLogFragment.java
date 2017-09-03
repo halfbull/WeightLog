@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -46,8 +47,10 @@ public class WeightLogFragment extends LifecycleFragment implements View.OnClick
         View v = inflater.inflate(R.layout.fragment_weight_log, container, false);
 
         weightLog = v.findViewById(R.id.weightLogRecyclerView);
-        weightLog.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        weightLog.setLayoutManager(layoutManager);
         weightLog.setAdapter(adapter);
+        weightLog.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
 
         ItemTouchHelper.SimpleCallback touch = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override

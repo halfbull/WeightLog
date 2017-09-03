@@ -2,18 +2,19 @@ package com.github.halfbull.weightlog.weightlog;
 
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Spanned;
-import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.halfbull.weightlog.AppViewModel;
 import com.github.halfbull.weightlog.R;
 import com.github.halfbull.weightlog.database.Weight;
@@ -23,10 +24,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
-public class AddWeightDialog extends DialogFragment {
+public class AddWeightDialog extends DialogFragment implements MaterialDialog.SingleButtonCallback {
 
     private AppViewModel model;
-    private EditText valueEditText;
 
     @NonNull
     private final InputFilter[] inputFilters = new InputFilter[]{new DecimalInputFilter()};
@@ -41,46 +41,54 @@ public class AddWeightDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_weight, null);
-        valueEditText = v.findViewById(R.id.value_edit_text);
-        valueEditText.setFilters(inputFilters);
-
-        return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.add_weight_dialog_title)
-                .setView(v)
-                .setPositiveButton(R.string.add_weight_dialog_ok_button, new DialogInterface.OnClickListener() {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.add_weight_dialog_title)
+                .positiveText(R.string.add_weight_dialog_ok_button)
+                .negativeText(R.string.add_weight_dialog_cancel_button)
+                .inputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                .input(null, "", new MaterialDialog.InputCallback() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String valueRaw = valueEditText.getText().toString();
-                        if (valueRaw.equals("")) {
-                            return;
-                        }
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
 
-                        final float value = Float.valueOf(valueRaw);
-                        new AsyncTask<Void, Void, Void>() {
-                            @Nullable
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-
-                                GregorianCalendar calendar = new GregorianCalendar();
-                                calendar.setTime(new Date());
-                                calendar.set(Calendar.MILLISECOND, 0);
-
-                                Weight w = new Weight();
-                                w.setDate(calendar.getTime());
-                                w.setValue(value);
-                                model.getWeightLogModel().addWeight(w);
-                                return null;
-                            }
-                        }.execute();
                     }
                 })
-                .setNegativeButton(R.string.add_weight_dialog_cancel_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                .onPositive(this)
+                .build();
 
-                    }
-                }).create();
+        EditText input = dialog.getInputEditText();
+        if (input != null) {
+            input.setFilters(inputFilters);
+            input.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN);
+        }
+
+        return dialog;
+    }
+
+    @Override
+    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+        EditText input = dialog.getInputEditText();
+        if (input == null)
+            return;
+
+        final String valueRaw = input.getText().toString();
+        if(valueRaw.equals(""))
+            return;
+
+        new AsyncTask<Void,Void,Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+                final float value = Float.valueOf(valueRaw);
+                GregorianCalendar calendar = new GregorianCalendar();
+                calendar.setTime(new Date());
+                calendar.set(Calendar.MILLISECOND, 0);
+
+                Weight w = new Weight();
+                w.setDate(calendar.getTime());
+                w.setValue(value);
+                model.getWeightLogModel().addWeight(w);
+                return null;
+            }
+        }.execute();
     }
 
     private class DecimalInputFilter implements InputFilter {

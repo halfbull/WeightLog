@@ -45,5 +45,9 @@
 
     <string name="preference_category_data">Данные</string>
     <string name="preference_import">Импорт</string>
+    <string name="preference_import_progress">Импортирую…</string>
+    <string name="preference_import_summary">Импортировать из файла \"weight_log.csv\"</string>
     <string name="preference_export">Экспорт</string>
+    <string name="preference_export_progress">Экспортирую…</string>
+    <string name="preference_export_summary">Экспортировать в файл \"weight_log.csv\"</string>
 </resources>
