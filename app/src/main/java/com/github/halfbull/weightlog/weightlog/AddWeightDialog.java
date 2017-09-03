@@ -26,7 +26,9 @@ import java.util.regex.Pattern;
 
 public class AddWeightDialog extends DialogFragment implements MaterialDialog.SingleButtonCallback {
 
-    private AppViewModel model;
+    interface AddWeightDialogListener {
+        void onWeightAdded(float value);
+    }
 
     @NonNull
     private final InputFilter[] inputFilters = new InputFilter[]{new DecimalInputFilter()};
@@ -34,13 +36,14 @@ public class AddWeightDialog extends DialogFragment implements MaterialDialog.Si
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        model = ViewModelProviders.of(getActivity()).get(AppViewModel.class);
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        //ToDo : get value from weightDiffs, from args
+
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(R.string.add_weight_dialog_title)
                 .positiveText(R.string.add_weight_dialog_ok_button)
@@ -71,24 +74,13 @@ public class AddWeightDialog extends DialogFragment implements MaterialDialog.Si
             return;
 
         final String valueRaw = input.getText().toString();
-        if(valueRaw.equals(""))
+        if (valueRaw.equals(""))
             return;
 
-        new AsyncTask<Void,Void,Void>(){
-            @Override
-            protected Void doInBackground(Void... voids) {
-                final float value = Float.valueOf(valueRaw);
-                GregorianCalendar calendar = new GregorianCalendar();
-                calendar.setTime(new Date());
-                calendar.set(Calendar.MILLISECOND, 0);
+        final float value = Float.valueOf(valueRaw);
 
-                Weight w = new Weight();
-                w.setDate(calendar.getTime());
-                w.setValue(value);
-                model.getWeightLogModel().addWeight(w);
-                return null;
-            }
-        }.execute();
+        AddWeightDialogListener fragment = (AddWeightDialogListener)getTargetFragment();
+        fragment.onWeightAdded(value);
     }
 
     private class DecimalInputFilter implements InputFilter {

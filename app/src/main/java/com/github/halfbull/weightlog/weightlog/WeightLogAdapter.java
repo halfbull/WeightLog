@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,8 +24,9 @@ import java.util.Locale;
 class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewHolder> {
 
     private Context context;
-
     private WeightDiffList weightDiffs;
+
+    private int selectedItemPosition;
 
     WeightLogAdapter(Context context) {
         weightDiffs = new WeightDiffList(new LinkedList<Weight>());
@@ -33,6 +37,7 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
     @Override
     public WeightViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weight_log_row, parent, false);
+
         return new WeightViewHolder(view);
     }
 
@@ -52,13 +57,21 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
         notifyDataSetChanged();
     }
 
-    class WeightViewHolder extends RecyclerView.ViewHolder {
+    private void setSelectedItemPosition(int position) {
+        selectedItemPosition = position;
+    }
+
+    int getSelectedItemPosition(){
+        return selectedItemPosition;
+    }
+
+    class WeightViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         @SuppressWarnings("SpellCheckingInspection")
-        final SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE, kk:mm", Locale.getDefault());
+        final SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 
         @SuppressWarnings("SpellCheckingInspection")
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, kk:mm", Locale.getDefault());
 
         private final TextView diff;
         private final TextView value;
@@ -67,6 +80,8 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
 
         WeightViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnCreateContextMenuListener(this);
+
             diff = itemView.findViewById(R.id.diff_tv);
             value = itemView.findViewById(R.id.value_tv);
             dayOfWeek = itemView.findViewById(R.id.day_of_week);
@@ -91,19 +106,23 @@ class WeightLogAdapter extends RecyclerView.Adapter<WeightLogAdapter.WeightViewH
         }
 
         private String formatDiff(float v) {
-            //return formatFloat(Math.abs(v));
             String str = formatFloat(v);
             if (v == 0)
                 return "";
             if (v > 0)
                 return "+" + str;
 
-            //return formatFloat(Math.abs(v));
             return str;
         }
 
         private String formatDate(Date date) {
             return dateFormat.format(date);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            WeightLogAdapter.this.setSelectedItemPosition(getAdapterPosition());
+            contextMenu.add(Menu.NONE, Menu.NONE, Menu.NONE, R.string.weight_log_context_menu_delete);
         }
     }
 }

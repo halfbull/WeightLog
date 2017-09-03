@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:longClickable="true">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_horizontal"
@@ -38,8 +39,8 @@
         android:id="@+id/diff_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="130dp"
-        android:textSize="26sp"
+        android:layout_marginEnd="120dp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -52,7 +53,7 @@
         android:layout_height="wrap_content"
         android:paddingEnd="16dp"
         android:paddingStart="0dp"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -25,6 +25,10 @@
     <string name="add_weight_dialog_ok_button">@android:string/ok</string>
     <string name="add_weight_dialog_cancel_button">@android:string/cancel</string>
 
+    <string name="delete_weight_dialog_title">Delete?</string>
+    <string name="delete_weight_dialog_ok_button">@android:string/ok</string>
+    <string name="delete_weight_dialog_cancel_button">@android:string/cancel</string>
+
     <string name="import_dialog_title">Import data</string>
     <string name="import_dialog_ok_button">@android:string/ok</string>
     <string name="import_dialog_cancel_button">@android:string/cancel</string>
@@ -41,6 +45,7 @@
     <string name="export_notification_io_exception">Can\'t write to file!</string>
 
     <string name="weight_log_remove_snack_undo">UNDO</string>
+    <string name="weight_log_context_menu_delete">Delete</string>
 
     <string name="preference_category_data">Data</string>
     <string name="preference_import">Import</string>
