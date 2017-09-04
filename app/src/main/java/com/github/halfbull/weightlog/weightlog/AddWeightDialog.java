@@ -30,8 +30,16 @@ public class AddWeightDialog extends DialogFragment implements MaterialDialog.Si
         void onWeightAdded(float value);
     }
 
+    private final String ARG_KEY_VALUE = "ADD_WEIGHT_DIALOG_VALUE";
+
     @NonNull
     private final InputFilter[] inputFilters = new InputFilter[]{new DecimalInputFilter()};
+
+    public void setArguments(float defaultValue) {
+        Bundle bundle = new Bundle();
+        bundle.putFloat(ARG_KEY_VALUE, defaultValue);
+        setArguments(bundle);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,15 +49,13 @@ public class AddWeightDialog extends DialogFragment implements MaterialDialog.Si
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        //ToDo : get value from weightDiffs, from args
-
+        String defaultValue = getDefaultValue();
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title(R.string.add_weight_dialog_title)
                 .positiveText(R.string.add_weight_dialog_ok_button)
                 .negativeText(R.string.add_weight_dialog_cancel_button)
                 .inputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-                .input(null, "", new MaterialDialog.InputCallback() {
+                .input(null, defaultValue, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
 
@@ -79,8 +85,14 @@ public class AddWeightDialog extends DialogFragment implements MaterialDialog.Si
 
         final float value = Float.valueOf(valueRaw);
 
-        AddWeightDialogListener fragment = (AddWeightDialogListener)getTargetFragment();
+        AddWeightDialogListener fragment = (AddWeightDialogListener) getTargetFragment();
         fragment.onWeightAdded(value);
+    }
+
+    private String getDefaultValue() {
+        Bundle bundle = getArguments();
+        float value = bundle.getFloat(ARG_KEY_VALUE);
+        return Float.toString(value);
     }
 
     private class DecimalInputFilter implements InputFilter {

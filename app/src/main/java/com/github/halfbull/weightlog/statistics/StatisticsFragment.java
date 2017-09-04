@@ -37,6 +37,7 @@ public class StatisticsFragment  extends LifecycleFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_statistics, container, false);
 
+        //ToDo : chart localize (no chart data available)
         chartPresenter = new ChartPresenter(getActivity(), (ScatterChart) v.findViewById(R.id.chart));
 
         final ContentLoadingProgressBar progressBar = v.findViewById(R.id.statisticsProgressBar);

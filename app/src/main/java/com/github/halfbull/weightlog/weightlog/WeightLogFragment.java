@@ -45,30 +45,11 @@ public class WeightLogFragment extends LifecycleFragment implements
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        //Log.i("!!!", "DELETE_ITEM " + adapter.getSelectedItemPosition());
-
-        //new MaterialDialog.Builder(getActivity()).title("Sure?").negativeText("Cancel").positiveText("YA").show();
-
-        /*DialogFragment df = new DialogFragment(){
-            @NonNull
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                return new MaterialDialog.Builder(getActivity()).title("Sure?").negativeText("Cancel").positiveText("YA").build();
-            }
-        };
-        df.show(getFragmentManager(), "DELETE_WEIGHT_DIALOG");*/
-
         DeleteWeightDialog dialog = new DeleteWeightDialog();
-
-        /*Bundle bundle = new Bundle();
-        bundle.putString("DELETE_WEIGHT_DIALOG_CONTENT", "!!!!!!!!!!!!");
-        dialog.setArguments(bundle);*/
         Weight weight = getSelectedWeight();
         dialog.setArguments(weight);
-
         dialog.setTargetFragment(this, 0);
         dialog.show(getFragmentManager(), "DELETE_WEIGHT_DIALOG");
-
         return super.onContextItemSelected(item);
     }
 
@@ -82,56 +63,6 @@ public class WeightLogFragment extends LifecycleFragment implements
         weightLog.setLayoutManager(layoutManager);
         weightLog.setAdapter(adapter);
         weightLog.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
-
-        /*weightLog.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                //Object o = this;
-                //Log.i("!!!!","onCreateContextMenu() => "+view.getId());
-
-            }
-        });*/
-
-
-
-
-        /*weightLog.setLongClickable(true);
-        weightLog.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Log.i("!!!", "OnLongClick");
-                return true;
-            }
-        });*/
-
-        //weightLog.regi
-
-
-        /*ItemTouchHelper.SimpleCallback touch = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position = viewHolder.getAdapterPosition();
-
-                new AsyncTask<Void, Void, Void>() {
-                    @Nullable
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        if (weightDiffs != null) {
-                            Weight weight = weightDiffs.getWeight(position);
-                            model.getWeightLogModel().delWeight(weight);
-                        }
-                        return null;
-                    }
-                }.execute();
-            }
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-        };
-        ItemTouchHelper touchHelper = new ItemTouchHelper(touch);
-        touchHelper.attachToRecyclerView(weightLog);*/
 
         FloatingActionButton fab = v.findViewById(R.id.add_fab);
         fab.setOnClickListener(this);
@@ -147,47 +78,18 @@ public class WeightLogFragment extends LifecycleFragment implements
             }
         });
 
-        /*model.getWeightLogModel().getRecycle().hasRecycledItems().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean hasRecycledItems) {
-                if (hasRecycledItems != null && hasRecycledItems) {
-                    showItemsDeletedSnackBar();
-                }
-            }
-        });*/
-
         return v;
     }
-
-    /*private void showItemsDeletedSnackBar() {
-        int deletedItems = model.getWeightLogModel().getRecycle().size();
-        String message = getResources().getQuantityString(R.plurals.weight_log_remove_snack_message, deletedItems, deletedItems);
-        Snackbar.make(weightLog, message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.weight_log_remove_snack_undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        model.getWeightLogModel().getRecycle().restore();
-                    }
-                })
-                .addCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar transientBottomBar, int event) {
-                        super.onDismissed(transientBottomBar, event);
-
-                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                            model.getWeightLogModel().getRecycle().clear();
-                        }
-                    }
-                }).show();
-    }*/
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.add_fab :
-                AddWeightDialog d = new AddWeightDialog();
-                d.setTargetFragment(this, 0);
-                d.show(getFragmentManager(), "ADD_WEIGHT_DIALOG");
+            case R.id.add_fab:
+                AddWeightDialog dialog = new AddWeightDialog();
+                float defaultValue = getNewDefaultValue();
+                dialog.setArguments(defaultValue);
+                dialog.setTargetFragment(this, 0);
+                dialog.show(getFragmentManager(), "ADD_WEIGHT_DIALOG");
                 break;
         }
     }
@@ -198,7 +100,7 @@ public class WeightLogFragment extends LifecycleFragment implements
             return;
         }
 
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 Weight weight = getSelectedWeight();
@@ -210,7 +112,7 @@ public class WeightLogFragment extends LifecycleFragment implements
 
     @Override
     public void onWeightAdded(final float value) {
-        new AsyncTask<Void,Void,Void>(){
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 //ToDo this should be in ViewModel
@@ -227,8 +129,19 @@ public class WeightLogFragment extends LifecycleFragment implements
         }.execute();
     }
 
+    private float getNewDefaultValue() {
+        float defaultValue = 75;
+        if(weightDiffs != null && weightDiffs.size() > 0){
+            Weight weight = weightDiffs.getWeight(0);
+            if(weight != null) {
+                defaultValue = weight.getValue();
+            }
+        }
+        return defaultValue;
+    }
+
     private Weight getSelectedWeight() {
-        if(weightDiffs == null)
+        if (weightDiffs == null)
             return null;
 
         int position = adapter.getSelectedItemPosition();
